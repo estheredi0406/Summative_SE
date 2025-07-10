@@ -1,309 +1,267 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
-import logo from "../assets/logo1.png";
-import { MdMenu, MdClose, MdSearch, MdKeyboardArrowDown } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { CiLocationOn } from "react-icons/ci";
+import { FaPhoneAlt } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
 
-function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-
-  const categories = [
-    "All Categories",
-    "Fruits",
-    "Vegetables",
-    "Protein",
-    "Dairy & Eggs",
-  ];
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const toggleCategoryDropdown = () => {
-    setIsCategoryOpen(!isCategoryOpen);
-  };
-
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-    setIsCategoryOpen(false);
-  };
-
+function Footer() {
   return (
-    <HeaderContainer>
-      <Nav>
-        <Logo>
-          <img src={logo} alt="Logo" />
-        </Logo>
+    <FooterContainer>
+      <FooterContent>
+        <Section>
+          <Logo>
+            <img src="./src/assets/logo1.png" alt="" />
+          </Logo>
+          <Description>
+            Healthy food delivered to your doorstep. Also we are commited to
+            deliver the best service to you, to make sure that you reach your
+            goals and spend less time in the figuring out what to cook
+          </Description>
+          <SocialIcons>
+            <Icon href="#">
+              <FaFacebookF />
+            </Icon>
+            <Icon href="#">
+              <FaInstagram />
+            </Icon>
+            <Icon href="#">
+              <FaTwitter />
+            </Icon>
+          </SocialIcons>
+        </Section>
 
-        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <MdClose size={30} /> : <MdMenu size={30} />}
-        </MobileIcon>
+        {/* Navigation Links */}
+        <Section>
+          <Titre>Explore</Titre>
+          <Nav>
+            <Link
+              to="/LandingPage"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <NavItem>Home</NavItem>
+            </Link>
 
-        <SearchContainer>
-          <CategoryDropdown>
-            <CategoryButton onClick={toggleCategoryDropdown}>
-              {selectedCategory}
-              <MdKeyboardArrowDown size={20} />
-            </CategoryButton>
-            {isCategoryOpen && (
-              <DropdownMenu>
-                {categories.map((category) => (
-                  <DropdownItem
-                    key={category}
-                    onClick={() => selectCategory(category)}
-                    active={category === selectedCategory}
-                  >
-                    {category}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            )}
-          </CategoryDropdown>
-          <SearchInput
-            type="text"
-            placeholder="Search for anything..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <SearchButton>
-            <MdSearch size={24} />
-          </SearchButton>
-        </SearchContainer>
+            <Link
+              to="/AboutUs"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <NavItem>About Us</NavItem>
+            </Link>
 
-        <Ulist isOpen={isOpen}>
-          <CloseButton onClick={() => setIsOpen(false)}>
-            <MdClose size={40} />
-          </CloseButton>
+            <Link
+              to="/ProductPage"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <NavItem>Products</NavItem>
+            </Link>
 
-          <LI>Home</LI>
-          <LI>About Us</LI>
-          <LI>Products</LI>
-          <LI>
-            <CartIcon>
-              <FaUser size={24} />
-            </CartIcon>
-          </LI>
-          <LI>
-            <CartIcon>
-              <FaShoppingCart size={24} />
-            </CartIcon>
-          </LI>
-        </Ulist>
-      </Nav>
-    </HeaderContainer>
+            <NavItem>Blog</NavItem>
+            <NavItem>Contact</NavItem>
+          </Nav>
+        </Section>
+
+        {/* Contact & Social Media */}
+        <Section>
+          <ContactInfo>
+            <Titres>Contact Info</Titres>
+            <P>
+              <Icons>
+                {" "}
+                <CiLocationOn />
+              </Icons>
+              Location: Kigali, Rwanda
+            </P>
+            <P>
+              <Icons>
+                {" "}
+                <FaPhoneAlt />
+              </Icons>
+              Phone: +250 123 456 789
+            </P>
+            <P>
+              <Icons>
+                {" "}
+                <MdOutlineEmail />
+              </Icons>
+              Email: support@fitmeal.com
+            </P>
+          </ContactInfo>
+        </Section>
+      </FooterContent>
+
+      {/* Copyright */}
+      <CopyRight>
+        &copy; {new Date().getFullYear()} Fitmeal. All rights reserved.
+      </CopyRight>
+    </FooterContainer>
   );
 }
 
-export default NavBar;
+export default Footer;
 
-// Styled components
-const HeaderContainer = styled.div`
-  width: 100%;
-  overflow-x: hidden;
-  padding-top: 10px;
-  height: 200px;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  height: 140px;
-  width: 100%;
-  padding: 0 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-
-  @media (max-width: 768px) {
-    justify-content: space-between;
-    padding: 20px;
-  }
-`;
-
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 50px;
-
-  img {
-    width: 150px;
-    margin-top: 20px;
-
-    @media (max-width: 768px) {
-      width: 80px;
-      margin-left: -130px;
-    }
-  }
-`;
-
-const MobileIcon = styled.div`
-  display: none;
-  cursor: pointer;
-  margin-left: auto;
-
-  @media (max-width: 768px) {
-    display: block;
-    margin-right: 80px;
-    margin-top: 10px;
-  }
-`;
-
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 20px;
-  width: 50%;
-  max-width: 600px;
-  position: relative;
-  height: 44px;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const CategoryDropdown = styled.div`
-  position: relative;
-  height: 100%;
-`;
-
-const CategoryButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0 16px;
-  background-color: #f3f3f3;
-  border: 1px solid #ddd;
-  border-radius: 4px 0 0 4px;
-  border-right: none;
-  cursor: pointer;
-  min-width: 160px;
-  font-size: 14px;
-
-  &:hover {
-    background-color: #e7e7e7;
-  }
-`;
-
-const DropdownMenu = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
-`;
-
-const DropdownItem = styled.div`
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  background-color: ${(props) => (props.active ? "#f0f0f0" : "white")};
-
-  &:hover {
-    background-color: #f7f7f7;
-  }
-`;
-
-const SearchInput = styled.input`
-  flex-grow: 1;
-  padding: 10px 16px;
-  border: 1px solid #ddd;
-  height: 100%;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-    border-color: #019875;
-  }
-`;
-
-const SearchButton = styled.button`
+const Icons = styled.div`
+  font-size: 1.4rem;
+  color: #a3d661;
+  transition: color 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  padding: 0 16px;
-  background-color: #019875;
+  margin-right: 0.5rem;
+`;
+
+const P = styled.p`
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 4rem;
+`;
+
+const Titres = styled.div`
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #a3d661;
+  margin-left: 0.5rem;
+  margin-top: -7.5rem;
+`;
+
+const Titre = styled.div`
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #a3d661;
+  margin-left: -5rem;
+  margin-top: 2rem;
+  @media (max-width: 768px) {
+    margin-left: -8rem;
+  }
+`;
+
+const FooterContainer = styled.footer`
+  background-color: #2c2c2c;
+
   color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #01705a;
-  }
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-top: 8rem;
 `;
 
-const Ulist = styled.ul`
+const FooterContent = styled.div`
+  max-width: 1100px;
+
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  width: 50%;
-  padding: 0;
-  margin-left: auto;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70vh;
-    background-color: white;
-    transform: ${({ isOpen }) =>
-      isOpen ? "translateX(0)" : "translateX(-100%)"};
-    transition: transform 0.3s ease-in-out;
-    padding-top: 80px;
-    box-shadow: ${({ isOpen }) =>
-      isOpen ? "0px 4px 10px rgba(0,0,0,0.1)" : "none"};
-    z-index: 1000;
+    text-align: center;
   }
 `;
 
-const LI = styled.li`
-  margin: 0 1rem;
+const Section = styled.div`
+  flex: 1;
+  min-width: 280px;
+  margin-top: 1rem;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    margin-left: -2rem;
+  }
+`;
+
+const Logo = styled.h2`
   font-size: 1rem;
-  color: black;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-left: -1rem;
+  img {
+    width: 220px;
+  }
+`;
+
+const Description = styled.p`
+  font-size: 1rem;
+  opacity: 0.8;
+  width: 70%;
+  text-align: left;
+  margin-left: -rem;
+`;
+
+const Nav = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  margin-left: -22rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-left: -400px;
+  }
+`;
+
+const NavItem = styled.li`
+  font-size: 1rem;
   cursor: pointer;
+  transition: color 0.3s;
+  text-align: left;
+  margin-left: 14rem;
 
   &:hover {
-    color: #019875;
-  }
-
-  @media (max-width: 768px) {
-    margin: 1rem 0;
-    font-size: 1.2rem;
+    color: #a3d661;
   }
 `;
 
-const CloseButton = styled.div`
-  display: none;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  cursor: pointer;
-
-  @media (max-width: 768px) {
-    display: block;
-  }
+const ContactInfo = styled.div`
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-top: 2.5rem;
+  margin-left: -5rem;
 `;
 
-const CartIcon = styled.div`
+const SocialIcons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-left: -4rem;
+`;
+
+const Icon = styled.a`
+  font-size: 1.4rem;
+  color: white;
+  transition: color 0.3s;
+  width: 40px;
+  height: 40px;
+  background-color: #a3d661;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+
+  &:hover {
+    color: #a3d661;
+  }
+`;
+
+const CopyRight = styled.p`
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 2rem;
+  text-align: center;
+  margin-left: -3rem;
 `;
