@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import eggs from "../assets/eggs.jpg";
 import lettuce from "../assets/salad.jpg";
 import beans from "../assets/beans.jpg";
 import bellpepper from "../assets/bellpeper.jpg";
