@@ -6,7 +6,7 @@ import beans from "../assets/beans.jpg";
 import bellpepper from "../assets/bellpeper.jpg";
 import bananas from "../assets/bananas.jpg";
 import chicken from "../assets/chicken.jpg";
-import bananagreen from "../assets/bananaGreen.jpg";
+import bananagreen from "../assets/bananagreen.jpg";
 import tomatoes from "../assets/tomatoes.jpg";
 import Shop from "../pages/user/Shop";
 
