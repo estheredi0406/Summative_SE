@@ -2,16 +2,17 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import logo from "../assets/logo1.png";
 import { MdMenu, MdClose } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // ⬅️ import for navigation
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate(); // ⬅️ init navigate
 
   return (
     <HeaderContainer>
       <Nav>
-        <Logo>
+        <Logo onClick={() => navigate("/")}>
           <img src={logo} alt="Logo" />
         </Logo>
 
@@ -24,16 +25,17 @@ function NavBar() {
             <MdClose size={40} />
           </CloseButton>
 
-          <LI>Home</LI>
-          <LI>About Us</LI>
-          <LI>Products</LI>
+          <LI onClick={() => navigate("/")}>Home</LI>
+          <LI onClick={() => navigate("/aboutUs")}>About Us</LI>
+          <LI onClick={() => navigate("/shop")}>Products</LI>
+
           <LI>
-            <CartIcon>
+            <CartIcon onClick={() => navigate("/profile")}>
               <FaUser size={24} />
             </CartIcon>
           </LI>
           <LI>
-            <CartIcon>
+            <CartIcon onClick={() => navigate("/cart")}>
               <FaShoppingCart size={24} />
             </CartIcon>
           </LI>
@@ -45,6 +47,16 @@ function NavBar() {
 
 export default NavBar;
 
+const HeadInfo = styled.div`
+  background-color: rgb(127, 190, 175);
+  width: 100%;
+  height: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 998;
+`;
+
 const HeaderContainer = styled.div`
   width: 100%;
   overflow-x: hidden;
@@ -55,8 +67,8 @@ const HeaderContainer = styled.div`
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  height: 140px;
+  background-color: rgba(223, 245, 175, 0.9);
+  height: 80px;
   width: 100%;
   padding: 0 20px;
   position: fixed;
@@ -76,8 +88,9 @@ const Logo = styled.div`
   margin-left: 50px;
 
   img {
-    width: 150px;
+    width: 230px;
     margin-top: 20px;
+    margin-left: 150px;
 
     @media (max-width: 768px) {
       width: 80px;

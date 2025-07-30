@@ -375,7 +375,16 @@ function ProductList() {
   }, []);
 
   const handleAddToCart = (product) => {
-    addToCart(product); // We just pass the raw product now
+    const isLoggedIn = localStorage.getItem("userToken"); // Or change the key based on what you'll use later
+
+    if (!isLoggedIn) {
+      // 🔁 Redirect to signup page if user is not logged in
+      navigate("/signup");
+      return;
+    }
+
+    // ✅ If logged in, add product to cart and show modal
+    addToCart(product);
     setAddedProduct(product);
     setIsModalOpen(true);
   };

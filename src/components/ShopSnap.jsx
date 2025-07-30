@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import eggs from "../assets/eggs.jpg";
 import lettuce from "../assets/salad.jpg";
 import beans from "../assets/beans.jpg";
@@ -8,9 +9,7 @@ import bananas from "../assets/bananas.jpg";
 import chicken from "../assets/chicken.jpg";
 import bananagreen from "../assets/bananaGreen.jpg";
 import tomatoes from "../assets/tomatoes.jpg";
-import { Link } from "react-router-dom";
-
-// Reusable FoodItem Component. The FoodItem component is a reusable component that takes image, title, content, and price as props and displays them in a styled format.
+import Shop from "../pages/user/Shop";
 
 function FoodItem({ image, title, content, price }) {
   return (
@@ -19,7 +18,7 @@ function FoodItem({ image, title, content, price }) {
       <Title>{title}</Title>
       <Content>{content}</Content>
       <Price>{price}</Price>
-      <Link to="/ProductPage" style={{ textDecoration: "none" }}>
+      <Link to="/Shop" style={{ textDecoration: "none" }}>
         <Button>View Product</Button>
       </Link>
     </UniqueFood>
@@ -41,7 +40,6 @@ function ListFood() {
     }
   };
 
-  // Food data array
   const foodItems = [
     {
       image: eggs,
@@ -52,45 +50,43 @@ function ListFood() {
     {
       image: bellpepper,
       title: "Bell Pepper",
-      content: "Fresh and crunchy, perfect for salads.",
+      content: "Fresh and crunchy.",
       price: "$3.99",
     },
     {
       image: tomatoes,
       title: "Tomatoes",
-      content: "Ripe and juicy tomatoes, perfect for salads, sauces, and more.",
+      content: "Ripe and juicy.",
       price: "$4.99",
     },
     {
       image: bananas,
       title: "Bananas",
-      content:
-        "Sweet and ripe bananas, perfect for smoothies and more, great for weight loss.",
+      content: "Sweet and ripe.",
       price: "$6.99",
     },
     {
       image: lettuce,
       title: "Lettuce",
-      content:
-        "Crisp and fresh lettuce, perfect for salads, sandwiches, and more.",
+      content: "Crisp and fresh.",
       price: "$7.99",
     },
     {
       image: chicken,
       title: "Chicken",
-      content: "Fresh chicken, perfect for grilling or roasting.",
+      content: "Fresh chicken.",
       price: "$5.49",
     },
     {
       image: bananagreen,
       title: "Green Bananas",
-      content: "Healthy and nutritious, great for weight loss.",
+      content: "Healthy and nutritious.",
       price: "$5.99",
     },
     {
       image: beans,
       title: "Beans",
-      content: "High in protein and fiber, perfect for salads and soups.",
+      content: "High in protein and fiber.",
       price: "$7.49",
     },
   ];
@@ -113,6 +109,9 @@ function ListFood() {
           <ScrollButton onClick={scrollLeft}>&lt;</ScrollButton>
           <ScrollButton onClick={scrollRight}>&gt;</ScrollButton>
         </ScrollButtons>
+        <Link to="/Shop" style={{ textDecoration: "none" }}>
+          <VisitShopButton>Visit Shop</VisitShopButton>
+        </Link>
       </FoodWrapper>
     </Wrapper>
   );
@@ -120,58 +119,76 @@ function ListFood() {
 
 export default ListFood;
 
+// Styled Components
 const Button = styled.button`
-  background-color: red;
+  background-color: #ff4757;
   color: white;
-  padding: 8px 20px;
+  padding: 6px 16px;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 8px;
+  margin-bottom: 16px;
 
   &:hover {
-    background-color: #9acd32;
+    background-color: #ff6b81;
+  }
+`;
+
+const VisitShopButton = styled.button`
+  background-color: #28a745; /* Green color for the shop button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Space above the button */
+
+  &:hover {
+    background-color: #218838; /* Darker green on hover */
   }
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  color: red;
-  padding: 5px;
+  color: #e84118;
+  padding: 4px;
   border-radius: 8px;
   text-align: center;
 `;
 
 const Content = styled.p`
-  font-size: 0.9rem;
-  color: gray;
+  font-size: 0.85rem;
+  color: #7f8c8d;
   text-align: center;
-  padding: 5px;
+  padding: 4px;
   border-radius: 8px;
 `;
 
 const Title = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: black;
+  color: #2f3542;
   text-align: center;
 
   &:hover {
-    color: green;
+    color: #1e90ff;
   }
 `;
 
 const Picture = styled.img`
-  width: 260px;
-  height: 160px;
+  width: 240px;
+  height: 150px;
   border-radius: 8px;
   object-fit: cover;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   transition: transform 0.3s;
 
   &:hover {
@@ -184,12 +201,12 @@ const UniqueFood = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 280px;
-  padding: 12px;
+  width: 260px;
+  padding: 10px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  margin: 8px;
   flex: 0 0 auto;
 `;
 
@@ -198,7 +215,7 @@ const ScrollContainer = styled.div`
   overflow-x: hidden;
   scroll-snap-type: x mandatory;
   padding: 10px;
-  gap: 10px;
+  gap: 8px;
   width: 80%;
   justify-content: flex-start;
   scroll-behavior: smooth;
@@ -207,33 +224,33 @@ const ScrollContainer = styled.div`
 
 const ScrollButton = styled.button`
   background-color: white;
-  width: 80px;
-  height: 80px;
-  color: red;
+  width: 60px;
+  height: 60px;
+  color: #ff4757;
   font-size: 1.5rem;
-  border: 1px solid red;
-  padding: 10px 15px;
+  border: 1px solid #ff4757;
+  padding: 8px;
   cursor: pointer;
   border-radius: 50%;
   transition: background-color 0.3s;
   margin: 5px;
 
   &:hover {
-    background-color: black;
+    background-color: #ff4757;
     color: white;
   }
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
-    padding: 8px 12px;
+    padding: 6px;
   }
 `;
 
 const ScrollButtons = styled.div`
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 15px;
+  gap: 15px;
+  margin-top: 10px;
   width: 100%;
 `;
 

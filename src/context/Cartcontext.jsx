@@ -1,105 +1,66 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-// Create the context for the cart
 export const CartContext = createContext();
 
-// Custom hook to use the CartContext
-export const useCart = () => {
-  return useContext(CartContext);
-};
-
-// Cart provider component
 export const CartProvider = ({ children }) => {
-  // Initialize cart from localStorage or as an empty array
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
+  // Load initial state from localStorage or empty array
+  const [cartItems, setCartItems] = useState(() => {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
   });
 
-  // Currency state
-  const [currency, setCurrency] = useState("RWF"); // Default currency set to RWF
-
-  // Update localStorage whenever the cart changes
+  // Save cartItems to localStorage on every change
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  // Function to convert price based on selected currency
-  const convertPrice = (price) => {
-    const numericPrice = parseFloat(price); // Ensure price is a number
-    if (isNaN(numericPrice)) {
-      return { amount: 0, symbol: currency === "RWF" ? "RWF" : "$" }; // Return 0 if the price is not a valid number
-    }
-    if (currency === "RWF") {
-      return { amount: numericPrice * 1100, symbol: "RWF" }; // Example conversion rate from USD to RWF
-    }
-    return { amount: numericPrice, symbol: "$" }; // Return price in USD
-  };
-
-  // Add product to the cart (with quantity management)
-  const addToCart = (product) => {
-    // Convert Price to a number and apply conversion
-    const { amount } = convertPrice(parseFloat(product.Price)); // Extract amount from conversion
-
-    const productWithNumberPrice = {
-      ...product,
-      Price: amount, // Set Price to the converted amount
-    };
-
-    const existingProduct = cart.find(
-      (item) => item.id === productWithNumberPrice.id
-    );
-
-    if (existingProduct) {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === productWithNumberPrice.id
-            ? { ...item, quantity: item.quantity + 1 }
+  const addToCart = (product, quantity) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
             : item
-        )
-      );
-    } else {
-      setCart((prevCart) => [
-        ...prevCart,
-        { ...productWithNumberPrice, quantity: 1 },
-      ]);
-    }
+        );
+      }
+      return [...prev, { ...product, quantity }];
+    });
   };
 
-  // Remove product from the cart by its ID
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Clear all items from the cart
-  const clearCart = () => {
-    setCart([]);
-  };
-
-  // Function to change currency
-  const changeCurrency = (newCurrency) => {
-    setCurrency(newCurrency);
-    // Optionally, you can convert existing cart prices to the new currency here
-    setCart((prevCart) =>
-      prevCart.map((item) => ({
-        ...item,
-        Price: convertPrice(item.Price / (currency === "RWF" ? 1100 : 1)), // Adjust price based on the new currency
-      }))
+  const updateQuantity = (id, quantity) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
+      )
     );
   };
+
+  const clearCart = () => setCartItems([]);
+
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + parseFloat(item.Price) * item.quantity,
+    0
+  );
 
   return (
     <CartContext.Provider
       value={{
-        cart,
+        cartItems,
         addToCart,
         removeFromCart,
+        updateQuantity,
         clearCart,
-        currency,
-        changeCurrency,
+        totalPrice,
       }}
     >
       {children}
     </CartContext.Provider>
   );
 };
+
+export default CartProvider;
