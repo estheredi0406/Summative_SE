@@ -42,12 +42,6 @@ function ListFood() {
 
   const foodItems = [
     {
-      image: eggs,
-      title: "Fresh Eggs",
-      content: "Organic farm eggs.",
-      price: "$8.99",
-    },
-    {
       image: bellpepper,
       title: "Bell Pepper",
       content: "Fresh and crunchy.",
