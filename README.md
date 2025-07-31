@@ -21,13 +21,20 @@ Admin tools for fast product updates
 
 Mobile-first design for on-the-go access
 
-✨ Features
+Features
 Browse and filter fresh grocery products
+
 Cart functionality with quantity control
+
 Login modal for user access
+
 Checkout overview with total price calculation
+
 Admin dashboard for uploading and editing items
+
 Responsive UI for mobile and desktop
+
+
 Tech Stack
 Frontend: React + Vite
 
@@ -46,10 +53,13 @@ To run this project locally:
 
 git clone https://github.com/yourusername/freshcart.git
 cd freshcart
+
 2. Install Dependencies
 Make sure you have Node.js and npm installed. Then run:
 
 npm install
+
+
 3. Start the Development Server
 
 npm run dev
